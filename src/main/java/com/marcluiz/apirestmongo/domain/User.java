@@ -3,9 +3,15 @@ package com.marcluiz.apirestmongo.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+//to say that our class corresponds to a mongoDB collection, we use the following annotation
+@Document(collection="user")
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Id
 	private String id;
 	private String name;
 	private String email;
