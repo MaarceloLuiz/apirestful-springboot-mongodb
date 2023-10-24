@@ -1,6 +1,7 @@
 package com.marcluiz.apirestmongo.resources;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.marcluiz.apirestmongo.domain.User;
+import com.marcluiz.apirestmongo.dto.UserDTO;
 import com.marcluiz.apirestmongo.services.UserService;
 
 @RestController
@@ -19,9 +21,13 @@ public class UserResource {
 	private UserService service;
 	
 	@GetMapping
-	public ResponseEntity<List<User>> findAll(){
+	public ResponseEntity<List<UserDTO>> findAll(){
 		List<User> list = service.findAll();
 		
-		return ResponseEntity.ok().body(list);
+		//converting user list to a userDTO list
+		//for each object 'x', it returns a new userDTO object using 'x' as an argument
+		List<UserDTO> listDTO = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+		
+		return ResponseEntity.ok().body(listDTO);
 	}
 }
