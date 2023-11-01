@@ -1,9 +1,12 @@
 package com.marcluiz.apirestmongo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 //to say that our class corresponds to a mongoDB collection, we use the following annotation
@@ -15,6 +18,10 @@ public class User implements Serializable{
 	private String id;
 	private String name;
 	private String email;
+	
+	@DBRef(lazy = true) //the Posts is now only going to be carried if specifically access them
+	//if I only try to access the Users, it won't carry the Post automatically
+	private List<Post> posts = new ArrayList<>();
 	
 	public User() {
 	}
@@ -48,6 +55,14 @@ public class User implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
 	@Override
