@@ -22,8 +22,16 @@ public class PostService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found"));
 	}
 	
+	//using Spring Query methods
+	/*
 	public List<Post> findByTitle(String text){
 		return repo.findByTitleContainingIgnoreCase(text);
+	}
+	*/
+	
+	//using our implemented search method
+	public List<Post> findByTitle(String text){
+		return repo.searchTitle(text);
 	}
 	
 }
